@@ -1,0 +1,5 @@
+name: imagehash
+author: Robert Damrau
+version: 0.1
+desc: Finding similar images using perceptual hashes 
+config_url: /plugins/imagehash/pages/setup.php
