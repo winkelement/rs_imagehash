@@ -19,6 +19,7 @@ $page_def = array();
 
 
 $page_def[] = config_add_boolean_select('imagehash_enabled', $lang['imagehash_enabled']);
+$page_def[] = config_add_text_input('imagehash_treshold', $lang['imagehash_treshold']);
 
 
 // Build the $page_def array of descriptions of each configuration variable the plugin uses.
