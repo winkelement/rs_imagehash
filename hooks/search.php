@@ -23,7 +23,7 @@ function HookImagehashSearchReplacesearch() {
         //@todo check if imagehash for reference exists, create one if necessary
         
         // Calculate hamming distance from imagehashes and return results array
-        $result = sql_query("SELECT *, BIT_COUNT(imagehash ^ '$hash_ref') as distance from resource "
+        $result = sql_query("SELECT *, access as user_access, BIT_COUNT(imagehash ^ '$hash_ref') as distance from resource "
         . "WHERE ref > '0' "
         . "AND imagehash IS NOT NULL "
         . "AND resource_type = '1' "
