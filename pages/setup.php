@@ -18,8 +18,14 @@ $page_intro = '<p>' . $lang['imagehash_intro'] . '</p>';
 $page_def = array();
 
 
-$page_def[] = config_add_boolean_select('imagehash_enabled', $lang['imagehash_enabled']);
-$page_def[] = config_add_text_input('imagehash_treshold', $lang['imagehash_treshold']);
+$page_def[] = config_add_boolean_select('imagehash_enabled', $lang['imagehash_enabled'],'',80);
+$page_def[] = config_add_text_input('imagehash_treshold', $lang['imagehash_treshold'],'',80);
+$page_def[] = config_add_html('<div class="Question">
+        <label for="imagehash" >' . $lang["imagehash_calculate"] . '</label>
+        <input type="button" id="calc_imagehash" value="'. $lang["imagehash_create"] .'" onclick="updateImagehash(forceHash=false);">
+        <input type="button" id="force_calc_imagehash" value="'. $lang["imagehash_recreate"] .'" onclick="updateImagehash(forceHash=true);"> 
+        </div>
+        <div class="clearerleft"></div>');
 
 
 // Build the $page_def array of descriptions of each configuration variable the plugin uses.
@@ -31,4 +37,13 @@ $upload_status = config_gen_setup_post($page_def, $plugin_name);
 include '../../../include/header.php';
 config_gen_setup_html($page_def, $plugin_name, $upload_status, $page_heading, $page_intro);
 include '../../../include/footer.php';
+?>
+<script>
+    baseUrl = '<?php echo $baseurl ?>';
+    function updateImagehash(forceHash) {
+        jQuery.get(baseUrl + '/plugins/imagehash/pages/update_imagehash.php', {recreate: forceHash},function (data) {
+            console.log(data); // debug
+        });
+    };
+</script>
 

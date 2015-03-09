@@ -8,14 +8,16 @@ function HookImagehashSearchReplacesearch() {
         $search_array = explode(":", $search);
         // If no reference ResourceID is provided, return null
         if (count($search_array) < 2) {
-            return null;
+            $result = "";
+            return $result;
         }
         $search_ref = $search_array[1];
         // Validate reference ResourceID
         $ref_filter_options = ["options" =>['min_range' => 1, 'max_range' => sql_value("SELECT ref value FROM resource ORDER BY ref DESC LIMIT 1", '')]];
         $ref_filtered = filter_var($search_ref, FILTER_VALIDATE_INT, $ref_filter_options);
         if (!$ref_filtered) {
-            return null;
+            $result = "";
+            return $result;
         }
         // Get imagehash value for refenrence image
         $hash_ref = sql_value("SELECT imagehash value from resource WHERE ref = '$ref_filtered'", '');
