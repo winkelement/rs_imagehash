@@ -6,6 +6,8 @@ require '../include/init.php';
 
 $start_1 = microtime(true);
 
+$ref_filter_options = ["options" =>['min_range' => 1, 'max_range' => sql_value("SELECT ref value FROM resource ORDER BY ref DESC LIMIT 1", '')]];
+$ref = filter_input(INPUT_GET, 'ref', FILTER_VALIDATE_INT, $ref_filter_options);
 $recreate = filter_input(INPUT_GET, 'recreate', FILTER_VALIDATE_BOOLEAN);
 
 if ($recreate) {
@@ -14,12 +16,16 @@ if ($recreate) {
     $recreate_condition = 'AND imagehash IS NULL';
 }
 
-$resources_newhash = sql_array("SELECT ref value from resource "
+if (!$ref) {
+    $resources_newhash = sql_array("SELECT ref value from resource "
         . "WHERE resource_type = '1' "
         . "AND ref > 0 "
         . "AND preview_extension = 'jpg' "
         . "'$recreate_condition'"
         . "ORDER BY creation_date DESC LIMIT 1000");
+} else {
+    $resources_newhash[] = $ref;
+}
 
 $count = count($resources_newhash);
 
